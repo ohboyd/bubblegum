@@ -34,7 +34,7 @@ function draw() {
 }
 
 class Bubble {
-  constructor(x, y, r) {
+  constructor(x, y, r = 50) {
     this.x = x;
     this.y = y;
     this.r = r;
@@ -44,6 +44,13 @@ class Bubble {
   changeColor(arr) {
     this.brightness = arr;
   }
+
+  // check if bubble has another bubble inside of it
+  intersects(otherBubble) {
+    let d = dist(this.x, this.y, otherBubble.x, otherBubble.y)
+    return (d < (this.r + otherBubble.r))
+  }
+
 
   contains(px, py) {
     let d = dist(px, py, this.x, this.y);
@@ -68,3 +75,26 @@ class Bubble {
     ellipse(this.x, this.y, this.r * 2);
   }
 }
+
+// This is example code to test how two bubbles could intersect one another and change the background if so
+// let bubble1;
+// let bubble2;
+//
+// function setup() {
+//   createCanvas(window.innerWidth, window.innerHeight);
+//   bubble1 = new Bubble(200, 300);
+//   bubble2 = new Bubble(300, 300);
+// }
+//
+// function draw() {
+//   background(0);
+//
+//   if(bubble1.intersects(bubble2)) {
+//     background(125, 150, 175);
+//   };
+//
+//   bubble1.move();
+//   bubble1.show();
+//   bubble2.move();
+//   bubble2.show();
+// }
