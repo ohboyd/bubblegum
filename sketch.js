@@ -22,13 +22,20 @@ function mousePressed(){
 
 function draw() {
   background(194, 151, 184);
-  for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].move();
-    bubbles[i].show();
-    if(bubbles[i].contains(mouseX, mouseY)) {
-      bubbles[i].changeColor([254, 91, 172]);
-    } else {
-      bubbles[i].changeColor(7);
+  for (let b of bubbles) {
+    b.move();
+    b.show();
+    let overlapping = false;
+    for (let other of bubbles) {
+      if (b.intersects(other) && b !== other) {
+        overlapping = true;
+      };
+
+      if (overlapping) {
+        b.changeColor([254, 91, 172]);
+      } else {
+        b.changeColor(0);
+      }
     }
   };
 }
