@@ -12,10 +12,11 @@ function setup() {
 }
 
 function mousePressed(){
-  for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].move();
-    bubbles[i].show();
-    bubbles[i].clicked(mouseX, mouseY);
+  // since I'm deleting values here, iterating backwards ensures I don't  miss any values
+  for (let i = bubbles.length - 1; i >= 0; i--) {
+    if(bubbles[i].contains(mouseX, mouseY)) {
+      bubbles.splice(i, 1);
+    }
   };
 }
 
@@ -24,6 +25,11 @@ function draw() {
   for (let i = 0; i < bubbles.length; i++) {
     bubbles[i].move();
     bubbles[i].show();
+    if(bubbles[i].contains(mouseX, mouseY)) {
+      bubbles[i].changeColor([254, 91, 172]);
+    } else {
+      bubbles[i].changeColor(7);
+    }
   };
 }
 
@@ -35,11 +41,18 @@ class Bubble {
     this.brightness = 7;
   }
 
-  clicked(px, py) {
+  changeColor(arr) {
+    this.brightness = arr;
+  }
+
+  contains(px, py) {
     let d = dist(px, py, this.x, this.y);
     if(d < this.r) {
-      this.brightness = [254, 91, 172];
-      console.log('clicked on bubble!');
+      // this.brightness = [254, 91, 172];
+      return true;
+    } else {
+      return false;
+      // this.brightness = 7;
     }
   }
 
